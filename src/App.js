@@ -3,10 +3,17 @@ import { nanoid } from 'nanoid';
 import Confetti from 'react-confetti';
 import './App.css';
 import Die from './components/Die';
+import timerSrc from './images/timer.png';
+import recordSrc from './images/record.png';
 
 function App() {
+  const STORAGE_KEY = 'record';
+
   const [dice, setDice] = useState(allNewDice());
   const [tenzies, setTenzies] = useState(false);
+  const [time, setTime] = useState(0);
+  const [timeStopped, setTimeStopped] = useState(false);
+  const [record, setRecord] = useState(getRecord() || 0);
 
   useEffect(() => {
     const allHeld = dice.every((die) => die.isHeld);
@@ -14,8 +21,33 @@ function App() {
 
     if (allHeld && allSameValue) {
       setTenzies(true);
+      setTimeStopped(true);
+    } else {
+      setTenzies(false);
+      setTimeStopped(false);
     }
   }, [dice]);
+
+  useEffect(() => {
+    let interval = setInterval(() => {
+      setTime(prevTime => prevTime + 1);
+    }, 1000);
+
+    if (timeStopped) {
+      clearInterval(interval);
+
+      if (record === '0' || time < record) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(time));
+        setRecord(time);
+      }
+    }
+  
+    return () => clearInterval(interval)
+  }, [timeStopped]);
+
+  function getRecord() {
+    return JSON.parse(localStorage.getItem(STORAGE_KEY));
+  }
 
   function createNewDie() {
     return {
@@ -41,6 +73,7 @@ function App() {
     } else {
       setDice(allNewDice());
       setTenzies(false);
+      setTime(0);
     }
   }
 
@@ -55,6 +88,12 @@ function App() {
           : die
       )
     );
+  }
+
+  function pad(number, size) {
+      let s = String(number);
+      while (s.length < (size || 2)) {s = "0" + s;}
+      return s;
   }
 
   const diceElements = dice.map((die) => (
@@ -76,6 +115,20 @@ function App() {
         Click each die to freeze it at its current value between rolls.
       </p>
       <div className='dice-container'>{diceElements}</div>
+      <div className='timer'>
+        <img src={timerSrc} alt='timer' />
+        <span>
+          {pad(time, 3)}
+        </span>
+      </div>
+      { tenzies && 
+        <div className='record'>
+          <img src={recordSrc} alt='record' />
+          <span>
+            {pad(record, 3)}
+          </span>
+        </div>
+      }
       <button className='roll-dice' onClick={rollDice}>
         {tenzies ? 'New Game' : 'Roll'}
       </button>
