@@ -34,7 +34,7 @@ function App() {
   }
 
   function rollDice() {
-    if(!tenzies) {
+    if (!tenzies) {
       setDice((oldDice) =>
         oldDice.map((die) => (die.isHeld ? die : createNewDie()))
       );
@@ -42,7 +42,6 @@ function App() {
       setDice(allNewDice());
       setTenzies(false);
     }
-    
   }
 
   function holdDice(id) {
@@ -69,7 +68,7 @@ function App() {
 
   return (
     <main>
-      { tenzies && <Confetti /> }
+      {tenzies && <Confetti />}
       <h1 className='title'>Tenzies</h1>
       <p className='instructions'>
         Roll until all dice are the same.
@@ -78,7 +77,7 @@ function App() {
       </p>
       <div className='dice-container'>{diceElements}</div>
       <button className='roll-dice' onClick={rollDice}>
-         { tenzies ? 'New Game' : 'Roll' }
+        {tenzies ? 'New Game' : 'Roll'}
       </button>
     </main>
   );
