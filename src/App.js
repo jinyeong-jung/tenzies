@@ -113,8 +113,7 @@ function App() {
 
   return (
     <main>
-      {/* {tenzies && <Confetti />} */}
-      <Confetti width={width} height={height} />
+      {tenzies && <Confetti />}
       <select onClick={changeLanguage} name='language'>
         <option value='english'>English</option>
         <option value='korean'>한국어</option>
