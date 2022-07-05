@@ -8,11 +8,10 @@ main {
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  position: relative;
 }
 
 main > select {
-  position: absolute;
+  position: fixed;
   top: 30px;
   right: 30px;
   width: 100px;

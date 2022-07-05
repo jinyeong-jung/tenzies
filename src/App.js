@@ -5,9 +5,11 @@ import './App.css';
 import Die from './components/Die';
 import timerSrc from './images/timer.png';
 import recordSrc from './images/record.png';
+import { useWindowSize } from 'react-use';
 
 function App() {
   const STORAGE_KEY = 'record';
+  const { width, height } = useWindowSize();
 
   const [dice, setDice] = useState(allNewDice());
   const [tenzies, setTenzies] = useState(false);
@@ -111,11 +113,12 @@ function App() {
 
   return (
     <main>
+      {/* {tenzies && <Confetti />} */}
+      <Confetti width={width} height={height} />
       <select onClick={changeLanguage} name='language'>
         <option value='english'>English</option>
         <option value='korean'>한국어</option>
       </select>
-      {tenzies && <Confetti />}
       <h1 className='title'>Tenzies</h1>
       <p className='instructions'>
         {language === 'english'
