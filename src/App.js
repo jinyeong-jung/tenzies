@@ -13,6 +13,7 @@ function App() {
   const [tenzies, setTenzies] = useState(false);
   const [time, setTime] = useState(0);
   const [record, setRecord] = useState(getRecord() || 0);
+  const [language, setLanguage] = useState('english');
 
   useEffect(() => {
     const allHeld = dice.every((die) => die.isHeld);
@@ -87,6 +88,10 @@ function App() {
     );
   }
 
+  function changeLanguage(event) {
+    setLanguage(event.target.value);
+  }
+
   function pad(number, size) {
     let s = String(number);
     while (s.length < (size || 2)) {
@@ -106,12 +111,16 @@ function App() {
 
   return (
     <main>
+      <select onClick={changeLanguage} name='language'>
+        <option value='english'>English</option>
+        <option value='korean'>한국어</option>
+      </select>
       {tenzies && <Confetti />}
       <h1 className='title'>Tenzies</h1>
       <p className='instructions'>
-        Roll until all dice are the same.
-        <br />
-        Click each die to freeze it at its current value between rolls.
+        {language === 'english'
+          ? 'Roll until all dice are the same.\nClick each die to freeze it at its current value between rolls.'
+          : '모든 주사위의 숫자가 같아질 때까지 주사위를 굴립니다.\n각 주사위를 클릭하면 현재 주사위 숫자를 유지할 수 있어요.'}
       </p>
       <div className='dice-container'>{diceElements}</div>
       <div className='timer'>

@@ -1,12 +1,27 @@
 main {
   background-color: #fff8e5;
   max-width: 800px;
+  min-width: 450px;
   border-radius: 5px;
   padding: 50px;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
+  position: relative;
+}
+
+main > select {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  width: 100px;
+  height: 35px;
+  text-indent: 5px;
+  border: none;
+  border-radius: 5px;
+  color: #888888;
+  font-family: 'Noto Sans', 'Noto Sans KR', sans-serif;
 }
 
 .title {
@@ -15,10 +30,11 @@ main {
 }
 
 .instructions {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Noto Sans', 'Noto Sans KR', sans-serif;
   font-weight: 400;
   margin: 0 0 40px 0;
   text-align: center;
+  white-space: pre-line;
 }
 
 .dice-container {
@@ -49,7 +65,8 @@ main {
   box-shadow: inset 5px 5px 10px -3px rgba(0, 0, 0, 0.3);
 }
 
-.timer, .record {
+.timer,
+.record {
   margin-bottom: 10px;
   font-family: karla;
   font-size: 20px;
